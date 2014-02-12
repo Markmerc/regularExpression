@@ -68,6 +68,13 @@ public class Labels {
     }
     return true;
   }
+  
+  /**
+   * Contains the given integer
+   */
+  public boolean contains(int d) {
+	  return labels.contains(d);
+  }
 
   /**
    * Add labels from an int to another int, inclusively
@@ -97,6 +104,10 @@ public class Labels {
     // If it is a label, containing such is true;
     return labels.contains(i);
   }
+  
+  public Set<Integer> getLabels() {
+	  return labels;
+  }
 
   // Char is a 16-bit unicode character with minimum value of 0
   // while int is a 32-bit signed two's complement integer.
@@ -104,4 +115,6 @@ public class Labels {
   private int charToInt(char c) {
     return (int)c;
   }
+  
+
 }

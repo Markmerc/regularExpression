@@ -65,11 +65,72 @@ public abstract class AbstractNFA {
     //use P to represent the intermediate states we have seen
     // obviously we begin with start state
     Set<Integer> P = new HashSet<Integer>(S);
-    int i = 0;
     
-    //now do some kind of graph traversal to see if this input can be accepted
+    
+	P.addAll(epsilonClosureSet(P));
+
+    for(int i = 0; i < input.length(); i++) {
+        Set<Integer> add = new HashSet<Integer>();    	
+    	
+    	for(int y : P){
+    		for (Edge edge : this.edges){
+    			if (edge.getSrc() == y && edge.getLabels().contains(input.charAt(i))){
+    				add.add(edge.getDst());
+    			}
+    		}
+    	}
+    	P = add;
+        P.addAll(epsilonClosureSet(P)); 			
+    }
+    
+    for(int d : P) {
+    	if (F.contains(d)) {
+    		return true;
+    	}
+    }
     
     return false;
+  }
+  
+  /**
+   * Finds the epsilon closure for a set of states
+   * @param the set of states
+   * @return the epsilon closure
+   */
+  public Set<Integer> epsilonClosureSet(Set<Integer> states) {
+	  HashSet<Integer> closure = new HashSet<Integer>();
+	  
+	  for(int x : states) {
+		  closure.addAll(epsilonClosure(x));
+	  }
+	  
+	  return closure;
+  }
+
+  
+  /**
+   * Extract epsilon closure for a given state
+   * @param state
+   * @return
+   */
+  public Set<Integer> epsilonClosure(int state) {
+	  
+	  Set<Integer> closure = new HashSet<Integer>();
+	  Set<Integer> temp = new HashSet<Integer>();
+	  
+	  for (Edge x : edges) {
+		  if(x.getSrc() == state && x.getLabels().contains(0)) {
+			 closure.add(x.getDst()); 
+		  }
+	  }
+	  
+	  for (int d : closure) {
+		  temp.addAll(epsilonClosure(d));
+	  }
+	  
+	  closure.addAll(temp);
+	  closure.add(state);
+	  return closure;
   }
 
   // following methods need to be implement in a child class
