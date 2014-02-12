@@ -66,6 +66,7 @@ public abstract class AbstractNFA {
     // obviously we begin with start state
     Set<Integer> P = new HashSet<Integer>(S);
     
+    //TODO accept any characters
     
 	P.addAll(epsilonClosureSet(P));
 

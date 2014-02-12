@@ -44,6 +44,7 @@ public class NFA extends AbstractNFA {
         			nfaStack.push(mkNFAOfWhite());
         		}
         		else if (c == 't') {
+        			//TODO figure out how to test whitespace
         			nfaStack.push(mkNFAOfChar('\t'));
         		}
         		else if (c =='|') {
