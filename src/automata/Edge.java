@@ -31,4 +31,10 @@ public class Edge {
   public Integer getDst() {
     return dst;
   }
+  
+  @Override
+  public String toString() {
+	  String s = src + "--" + (char)(int)labels.getLabels().iterator().next() + "-->" + dst;
+	  return s;
+  }
 }
