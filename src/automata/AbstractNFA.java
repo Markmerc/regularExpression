@@ -65,9 +65,7 @@ public abstract class AbstractNFA {
     //use P to represent the intermediate states we have seen
     // obviously we begin with start state
     Set<Integer> P = new HashSet<Integer>(S);
-    
-    //TODO accept any characters
-    
+        
 	P.addAll(epsilonClosureSet(P));
 
     for(int i = 0; i < input.length(); i++) {
@@ -75,7 +73,8 @@ public abstract class AbstractNFA {
     	
     	for(int y : P){
     		for (Edge edge : this.edges){
-    			if (edge.getSrc() == y && edge.getLabels().contains(input.charAt(i))){
+    			if (edge.getSrc() == y && 
+    			(edge.getLabels().contains(input.charAt(i)) || edge.getLabels().contains(-1))) {
     				add.add(edge.getDst());
     			}
     		}
